@@ -1,0 +1,1 @@
+- 2026-10-15: Refactor PPEDetection.py (argparse CLI, helpers, safe capture loop), add tests, requirements.txt, correct README, .gitignore (PR)
