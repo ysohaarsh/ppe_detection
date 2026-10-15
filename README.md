@@ -1,60 +1,58 @@
+# PPE Detection using YOLO
 
-# Poker Hand Detection using YOLO
+![PPE Detection](ppe.jpg)
 
-![Poker Hand Detection](ppe.jpg)
+Real-time detection of personal protective equipment (hard hats, masks, safety vests)
+on a webcam or video stream, built on [Ultralytics YOLO](https://docs.ultralytics.com/).
+Inspired by Murtaza's Workshop object detection tutorial.
 
-## Overview
+Detected classes: `Hardhat`, `Mask`, `NO-Hardhat`, `NO-Mask`, `NO-Safety Vest`, `Person`,
+`Safety Cone`, `Safety Vest`, `machinery`, `vehicle`.
+Boxes are green when PPE is present, red when it is missing and blue for everything else.
 
-This project showcases real-time poker hand detection using YOLO (You Only Look Once) object detection. Inspired by Murtaza's Workshop object detection tutorial, it identifies and labels playing cards in a webcam or video stream, allowing for the determination of poker hands.
+## Setup
 
-The project is equipped to recognize various playing card ranks and suits, making it a fun and engaging application for card game enthusiasts and developers interested in computer vision.
+```bash
+git clone https://github.com/ysohaarsh/ppe_detection.git
+cd ppe_detection
+python -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+```
 
-## Requirements
-
-- Python 3.7+
-- Ultralytics library (`pip install ultralytics`)
-- OpenCV (`pip install opencv-python`)
-- cvzone (`pip install cvzone`)
-- PokerHandFunction (Include instructions or a link to this custom module if it's not included in the project repository)
+Python 3.8+ is required. The weights (`PPEDetection/ppe.pt`) are included in the repo.
 
 ## Usage
 
-1. Clone this repository to your local machine:
+```bash
+# webcam 0 (default)
+python PPEDetection/PPEDetection.py
 
-   ```bash
-   git clone https://github.com/ysohaarsh/poker_hand_detection.git
-   ```
+# a video file, with a stricter confidence threshold
+python PPEDetection/PPEDetection.py --source path/to/video.mp4 --conf 0.6
+```
 
-2. Open a terminal and navigate to the project directory:
+| Option | Default | Description |
+|---|---|---|
+| `--source` | `0` | Webcam index or video file path |
+| `--model` | `PPEDetection/ppe.pt` | YOLO weights |
+| `--conf` | `0.5` | Minimum confidence to draw a detection |
+| `--width` / `--height` | `1280` / `720` | Webcam capture size |
 
-   ```bash
-   cd poker-hand-detection
-   ```
+Press `q` in the preview window to quit.
 
-3. Run the poker hand detection script:
+## Tests
 
-   ```bash
-   python poker_hand_detection.py
-   ```
+```bash
+pip install pytest
+pytest
+```
 
-   This will launch the poker hand detection application using your webcam as the video source. You can also modify the script to use a different video source if needed.
+The tests cover the pure helper functions only; they need no GPU, camera or weights.
 
-## How it Works
+## Other scripts
 
-- The YOLO model is used to detect and classify playing cards in real-time.
-
-- Detected cards are labeled with their ranks and suits, and their positions are marked with corner rectangles.
-
-- The script collects the detected cards and analyzes them to determine the poker hand, displaying the result on the screen when a complete hand is detected.
+`pokerHandDetector/` contains a separate playing-card / poker-hand detector using the same approach.
 
 ## Credits
 
-This project is inspired by Murtaza's Workshop object detection tutorial, which provided the foundation for developing the poker hand detection system.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-```
-
-Please replace `"https://github.com/yourusername/poker-hand-detection.git"` with the actual URL of your GitHub repository, and ensure that you provide clear instructions or a link to the `PokerHandFunction` module if it's not included in the project repository. You can also customize other sections as needed.
+Based on Murtaza's Workshop object detection tutorial.
