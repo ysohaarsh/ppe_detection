@@ -1,0 +1,1 @@
+- 2026-10-22: add .gitignore, untrack committed __pycache__, add pytest tests for findPokerHand (PR)
